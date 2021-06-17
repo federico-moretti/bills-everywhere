@@ -1,9 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import { render } from './testUtils';
 import App from './App';
 
-test('renders welcome logo', () => {
+test('renders App', async () => {
   render(<App />);
-  const imgElement = screen.getByAltText(/Welcome!/i);
-  expect(imgElement).toBeInTheDocument();
+
+  await waitFor(() => screen.getByText('Billed:'));
+  await waitFor(() => screen.getByText('Not billed:'));
 });

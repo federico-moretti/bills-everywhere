@@ -1,49 +1,89 @@
 import React from 'react';
-import { Store, useAppDispatch, useAppSelector } from './store';
-import { actionMerchantsGet } from './store/merchants';
-import { createSelector } from 'reselect';
+import styled from 'styled-components';
+import {
+  useAppActions,
+  useAppSelector,
+  billedMerchantsSelector,
+  notBilledMerchantsSelector,
+} from './store';
+import Tabs from './components/Tabs';
+import MerchantRow from './components/MerchantRow';
+import Loader from './components/Loader';
 
-const billedMerchantsSelector = createSelector(
-  (state: Store) => state.merchants.items,
-  (merchants) => merchants.filter((m) => m.isBill)
-);
-const notBilledMerchantsSelector = createSelector(
-  (state: Store) => state.merchants.items,
-  (merchants) => merchants.filter((m) => !m.isBill)
-);
+const TitleStyled = styled.h1`
+  color: ${(p) => p.theme.colors.accentDark};
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+`;
 
-const App: React.FunctionComponent = () => {
-  const dispatch = useAppDispatch();
+const ListStyled = styled.div`
+  & > *:not(:last-child) {
+    margin-bottom: 10px;
+  }
+`;
 
-  const isAppLoading = useAppSelector((state) => state.app.loading);
-  const isAppError = useAppSelector((state) => state.app.error);
+const AppStyled = styled.section`
+  margin: 0 10px;
+
+  ${(p) => p.theme.mediaQueries.md} {
+    margin: 0 30px;
+  }
+`;
+
+const tabs = [
+  { key: 'billed', label: 'Bills' },
+  { key: 'notBilled', label: 'Potential bills' },
+];
+
+function App() {
+  const actions = useAppActions();
+
+  const isAppError = useAppSelector((s) => s.app.error);
+  const isAppLoading = useAppSelector((s) => s.app.loading);
 
   const billedMerchants = useAppSelector(billedMerchantsSelector);
   const notBilledMerchants = useAppSelector(notBilledMerchantsSelector);
 
   React.useEffect(() => {
-    dispatch(actionMerchantsGet());
-  }, [dispatch]);
+    actions.actionMerchantsGet();
+    actions.actionCategoriesGet();
+  }, [actions]);
 
-  if (isAppLoading > 0) return <div>Loading...</div>;
+  const [selectedTab, setSelectedTab] = React.useState(tabs[0]);
+
   if (isAppError) return <div>Error: {isAppError.toString()}</div>;
 
   return (
-    <section>
-      <p>Billed:</p>
-      <ul>
-        {billedMerchants.map((m) => (
-          <li key={m.id}>{m.name}</li>
-        ))}
-      </ul>
-      <p>Not billed:</p>
-      <ul>
-        {notBilledMerchants.map((m) => (
-          <li key={m.id}>{m.name}</li>
-        ))}
-      </ul>
-    </section>
+    <>
+      <Loader loading={isAppLoading > 0} />
+      <AppStyled>
+        <TitleStyled>Bills. Bills everywhere.</TitleStyled>
+        <Tabs
+          items={tabs}
+          selectedItem={selectedTab}
+          valueAccessor={(i) => i.key}
+          labelAccessor={(i) => i.label}
+          onChange={setSelectedTab}
+          style={{ marginBottom: 20 }}
+        />
+        {selectedTab.key === 'billed' && (
+          <ListStyled>
+            {billedMerchants.map((m) => (
+              <MerchantRow key={m.id} merchant={m} />
+            ))}
+          </ListStyled>
+        )}
+        {selectedTab.key === 'notBilled' && (
+          <ListStyled>
+            {notBilledMerchants.map((m) => (
+              <MerchantRow key={m.id} merchant={m} />
+            ))}
+          </ListStyled>
+        )}
+      </AppStyled>
+    </>
   );
-};
+}
 
 export default App;

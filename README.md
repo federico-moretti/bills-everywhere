@@ -24,6 +24,7 @@
 - improve e2e testing
 - add more animations
 - improve error handling
+- translations
 
 ## Licence
 

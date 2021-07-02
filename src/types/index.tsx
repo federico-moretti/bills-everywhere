@@ -4,6 +4,12 @@ export type Transaction = {
   date: string;
 };
 
+export type Category = {
+  id: number;
+  iconUrl: string;
+  name: string;
+};
+
 export type Merchant = {
   id: string;
   transactions: Transaction[];

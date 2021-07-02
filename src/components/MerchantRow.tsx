@@ -65,7 +65,7 @@ const HeaderStyled = styled.div`
   width: 100%;
 `;
 
-const List = styled(motion.ul)`
+const ListStyled = styled(motion.ul)`
   margin: 0 20px;
   padding: 0;
 
@@ -125,7 +125,7 @@ function MerchantRow(props: MerchantRowProps) {
       </HeaderStyled>
       <AnimatePresence>
         {isOpen && (
-          <List initial="closed" animate="open" exit="closed" variants={variants}>
+          <ListStyled initial="closed" animate="open" exit="closed" variants={variants}>
             <div>
               {merchant.transactions.map((transaction) => (
                 <li data-testid="transaction" key={transaction.id}>
@@ -137,7 +137,7 @@ function MerchantRow(props: MerchantRowProps) {
                 </li>
               ))}
             </div>
-          </List>
+          </ListStyled>
         )}
       </AnimatePresence>
     </MerchantRowStyled>

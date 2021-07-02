@@ -4,9 +4,8 @@ import { createApiTypes } from './utils';
 import * as apis from '../apis';
 import { actionAppLoadingAdd, actionAppLoadingRemove, actionAppErrorAdd } from './app';
 
-// types
+// actions
 const CATEGORIES_GET = createApiTypes('CATEGORIES_GET');
-
 type CategoriesGetSuccessAction = {
   type: typeof CATEGORIES_GET.SUCCESS;
   payload: { categories: Category[] };

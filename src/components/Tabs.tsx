@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { baseFontProperties } from '../shared/constants';
 
-const TabStyled = styled.div`
+const TabsStyled = styled.div`
   background-color: ${(p) => p.theme.colors.accentBackground};
   display: flex;
   align-items: center;
@@ -11,7 +11,7 @@ const TabStyled = styled.div`
   border-radius: 10px;
 `;
 
-const ButtonStyled = styled.button<{ active: boolean }>`
+const TabStyled = styled.button<{ active: boolean }>`
   background-color: ${(p) => p.theme.colors.accentLight};
   border: 3px solid ${(p) => (p.active ? p.theme.colors.accentDark : p.theme.colors.accentLight)};
   padding: 10px 20px;
@@ -36,7 +36,7 @@ const ButtonStyled = styled.button<{ active: boolean }>`
   }
 `;
 
-type TabProps<Item> = {
+type TabsProps<Item> = {
   items: Item[];
   selectedItem: Item;
   labelAccessor: (i: Item) => string;
@@ -44,13 +44,13 @@ type TabProps<Item> = {
   onChange: (i: Item) => void;
   style?: React.CSSProperties;
 };
-function Tabs<Item>(props: TabProps<Item>) {
+function Tabs<Item>(props: TabsProps<Item>) {
   const { items, selectedItem, labelAccessor, valueAccessor, onChange, style } = props;
 
   return (
-    <TabStyled style={style}>
+    <TabsStyled style={style}>
       {items.map((item) => (
-        <ButtonStyled
+        <TabStyled
           role="tab"
           key={valueAccessor(item)}
           onClick={() => onChange(item)}
@@ -58,9 +58,9 @@ function Tabs<Item>(props: TabProps<Item>) {
           aria-selected={valueAccessor(item) === valueAccessor(selectedItem)}
         >
           {labelAccessor(item)}
-        </ButtonStyled>
+        </TabStyled>
       ))}
-    </TabStyled>
+    </TabsStyled>
   );
 }
 

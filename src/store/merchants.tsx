@@ -4,9 +4,8 @@ import { createApiTypes } from './utils';
 import * as apis from '../apis';
 import { actionAppLoadingAdd, actionAppLoadingRemove, actionAppErrorAdd } from './app';
 
-// merchants get
+// merchants get action
 const MERCHANTS_GET = createApiTypes('MERCHANTS_GET');
-
 type MerchantsGetSuccessAction = {
   type: typeof MERCHANTS_GET.SUCCESS;
   payload: { merchants: Merchant[] };
@@ -19,7 +18,7 @@ export const actionMerchantsGet = (): MerchantsGetRequestAction => ({
   type: MERCHANTS_GET.REQUEST,
 });
 
-// merchants patch
+// merchants patch action
 const MERCHANTS_PATCH = createApiTypes('MERCHANTS_PATCH');
 type MerchantsPatchRequestAction = {
   type: typeof MERCHANTS_PATCH.REQUEST;

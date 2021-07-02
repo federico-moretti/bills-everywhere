@@ -1,10 +1,10 @@
-import { call, put, takeLatest } from '@redux-saga/core/effects';
+import { call, put, takeEvery } from '@redux-saga/core/effects';
 import { Merchant } from '../types';
 import { createApiTypes } from './utils';
 import * as apis from '../apis';
 import { actionAppLoadingAdd, actionAppLoadingRemove, actionAppErrorAdd } from './app';
 
-// types
+// merchants get
 const MERCHANTS_GET = createApiTypes('MERCHANTS_GET');
 
 type MerchantsGetSuccessAction = {
@@ -19,7 +19,24 @@ export const actionMerchantsGet = (): MerchantsGetRequestAction => ({
   type: MERCHANTS_GET.REQUEST,
 });
 
-export type MerchantsActions = MerchantsGetSuccessAction | MerchantsGetRequestAction;
+// merchants patch
+const MERCHANTS_PATCH = createApiTypes('MERCHANTS_PATCH');
+type MerchantsPatchRequestAction = {
+  type: typeof MERCHANTS_PATCH.REQUEST;
+  payload: Partial<Merchant> & { id: string };
+};
+
+export const actionMerchantsPatch = (
+  merchant: Partial<Merchant> & { id: string }
+): MerchantsPatchRequestAction => ({
+  type: MERCHANTS_PATCH.REQUEST,
+  payload: merchant,
+});
+
+export type MerchantsActions =
+  | MerchantsGetSuccessAction
+  | MerchantsGetRequestAction
+  | MerchantsPatchRequestAction;
 
 // store
 type MerchantsStore = {
@@ -65,7 +82,26 @@ function* merchantsGet() {
 }
 
 function* watchMerchantsGet() {
-  yield takeLatest(MERCHANTS_GET.REQUEST, merchantsGet);
+  yield takeEvery<MerchantsGetRequestAction>(MERCHANTS_GET.REQUEST, merchantsGet);
 }
 
-export const merchantsSagas = [watchMerchantsGet];
+function* merchantsPatch({ payload }: MerchantsPatchRequestAction) {
+  try {
+    yield put(actionAppLoadingAdd());
+
+    yield call(apis.merchantsPatch, payload.id, payload);
+    yield merchantsGet(); // refresh merchants from db
+
+    yield put(actionAppLoadingRemove());
+  } catch (error) {
+    console.log('error:', error);
+    yield put(actionAppErrorAdd(error));
+    yield put(actionAppLoadingRemove());
+  }
+}
+
+function* watchMerchantsPatch() {
+  yield takeEvery<MerchantsPatchRequestAction>(MERCHANTS_PATCH.REQUEST, merchantsPatch);
+}
+
+export const merchantsSagas = [watchMerchantsGet, watchMerchantsPatch];

@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from '@redux-saga/core/effects';
+import { call, put, takeLatest } from '@redux-saga/core/effects';
 import { Merchant } from '../types';
 import { createApiTypes } from './utils';
 import * as apis from '../apis';
@@ -81,7 +81,7 @@ function* merchantsGet() {
 }
 
 function* watchMerchantsGet() {
-  yield takeEvery<MerchantsGetRequestAction>(MERCHANTS_GET.REQUEST, merchantsGet);
+  yield takeLatest<MerchantsGetRequestAction>(MERCHANTS_GET.REQUEST, merchantsGet);
 }
 
 function* merchantsPatch({ payload }: MerchantsPatchRequestAction) {
@@ -100,7 +100,7 @@ function* merchantsPatch({ payload }: MerchantsPatchRequestAction) {
 }
 
 function* watchMerchantsPatch() {
-  yield takeEvery<MerchantsPatchRequestAction>(MERCHANTS_PATCH.REQUEST, merchantsPatch);
+  yield takeLatest<MerchantsPatchRequestAction>(MERCHANTS_PATCH.REQUEST, merchantsPatch);
 }
 
 export const merchantsSagas = [watchMerchantsGet, watchMerchantsPatch];

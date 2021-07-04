@@ -2,7 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
 import { render } from '../testUtils';
-import MerchantRow from './MerchantRow';
+import MerchantAccordion from './MerchantAccordion';
 import { Merchant } from '../types';
 
 const merchant: Merchant = {
@@ -20,9 +20,9 @@ const merchant: Merchant = {
   ],
 };
 
-describe('MerchantRow', () => {
-  test('Click on MerchantRow', async () => {
-    render(<MerchantRow merchant={merchant} />);
+describe('MerchantAccordion', () => {
+  test('Click on MerchantAccordion', async () => {
+    render(<MerchantAccordion merchant={merchant} />);
 
     // check row header
     const row = screen.getByText(merchant.name);

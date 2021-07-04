@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { baseFontProperties } from '../shared/constants';
 
 const TabsStyled = styled.div`
-  background-color: ${(p) => p.theme.colors.accentBackground};
+  background-color: ${(p) => p.theme.colors.accent50};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,8 +12,8 @@ const TabsStyled = styled.div`
 `;
 
 const TabStyled = styled.button<{ active: boolean }>`
-  background-color: ${(p) => p.theme.colors.accentLight};
-  border: 3px solid ${(p) => (p.active ? p.theme.colors.accentDark : p.theme.colors.accentLight)};
+  background-color: ${(p) => p.theme.colors.accent200};
+  border: 3px solid ${(p) => (p.active ? p.theme.colors.accent400 : p.theme.colors.accent200)};
   padding: 10px 20px;
   margin: 0 5px;
   cursor: pointer;
@@ -25,10 +25,11 @@ const TabStyled = styled.button<{ active: boolean }>`
   font-size: 1.1rem;
   font-weight: bold;
 
+  &:focus,
   &:hover {
-    background-color: ${(p) => p.theme.colors.accentDefault};
-    border: 3px solid
-      ${(p) => (p.active ? p.theme.colors.accentDark : p.theme.colors.accentDefault)};
+    outline: none;
+    background-color: ${(p) => p.theme.colors.accent300};
+    border: 3px solid ${(p) => (p.active ? p.theme.colors.accent400 : p.theme.colors.accent300)};
   }
 
   ${(p) => p.theme.mediaQueries.md} {

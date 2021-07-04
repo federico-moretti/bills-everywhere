@@ -11,7 +11,7 @@ const LoaderStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(p) => p.theme.colors.background}40;
+  background-color: ${(p) => p.theme.colors.background}40; // 40 means at 50% opacity
 
   img {
     max-width: 200px;

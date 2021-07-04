@@ -6,23 +6,25 @@ export const theme = {
     lg: '@media (min-width: 1000px)',
   },
   colors: {
-    accentBackground: '#EEF2FF',
-    accentLight: '#C7D2FE',
-    accentDefault: '#A5B4FC',
-    accentDark: '#818CF8',
-    secondaryBackground: '#F0FDFA',
-    secondaryLight: '#99F6E4',
-    secondaryDefault: '#5EEAD4',
-    secondaryDark: '#2DD4BF',
-    fontColorLight: '#555555',
-    fontColorDefault: '#333333',
+    accent50: '#EEF2FF',
+    accent100: '#EEF2FF',
+    accent200: '#C7D2FE',
+    accent300: '#A5B4FC',
+    accent400: '#818CF8',
+    secondary50: '#F0FDFA',
+    secondary100: '#CCFBF1',
+    secondary200: '#99F6E4',
+    secondary300: '#5EEAD4',
+    secondary400: '#2DD4BF',
+    font200: '#555555',
+    font300: '#333333',
     background: '#FDFDFD',
   },
 };
 
 export const baseFontProperties = css`
   font-size: 16px;
-  color: ${(p) => p.theme.colors.fontColorDefault};
+  color: ${(p) => p.theme.colors.font200};
   letter-spacing: 0.02rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

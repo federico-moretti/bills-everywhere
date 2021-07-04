@@ -7,11 +7,11 @@ import {
   notBilledMerchantsSelector,
 } from './store';
 import Tabs from './components/Tabs';
-import MerchantRow from './components/MerchantRow';
+import MerchantAccordion from './components/MerchantAccordion';
 import Loader from './components/Loader';
 
 const TitleStyled = styled.h1`
-  color: ${(p) => p.theme.colors.accentDark};
+  color: ${(p) => p.theme.colors.accent400};
   text-align: center;
   margin: 0;
   padding: 20px;
@@ -70,14 +70,14 @@ function App() {
         {selectedTab.key === 'billed' && (
           <ListStyled>
             {billedMerchants.map((m) => (
-              <MerchantRow key={m.id} merchant={m} />
+              <MerchantAccordion key={m.id} merchant={m} />
             ))}
           </ListStyled>
         )}
         {selectedTab.key === 'notBilled' && (
           <ListStyled>
             {notBilledMerchants.map((m) => (
-              <MerchantRow key={m.id} merchant={m} />
+              <MerchantAccordion key={m.id} merchant={m} />
             ))}
           </ListStyled>
         )}

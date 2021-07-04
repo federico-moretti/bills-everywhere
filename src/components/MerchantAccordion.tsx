@@ -134,6 +134,7 @@ function MerchantAccordion(props: MerchantAccordionProps) {
           <ButtonStyled
             onClick={changeBillStatus}
             onKeyDown={(e) => handleExecuteKeyActions(e, () => changeBillStatus(e))}
+            title={`${merchant.isBill ? 'Remove bill' : 'Add as bill'} - ${merchant.name}`}
           >
             {merchant.isBill ? 'Remove bill' : 'Add as bill'}
           </ButtonStyled>

@@ -22,6 +22,7 @@
 ## Todo
 
 - improve e2e testing
+- add tests for store
 - add more animations
 - improve error handling
 - translations

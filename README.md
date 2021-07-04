@@ -1,6 +1,6 @@
 # Bills. Bills everywhere.
 
-## Start
+## How to
 
 `npm install` to install the packages
 
